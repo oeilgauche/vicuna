@@ -8,6 +8,7 @@
 
 		<p>Reference: {{ product.reference }}</p>
 		<p>Supplier Reference: {{ product.supplier_reference }}</p>
+		<p>Buying Price: {{ product.buying_price / 100 }} euros
 		<p>Suppplier(s):</p>
 		<ul>
 			{% for supplier in product.supplier %}

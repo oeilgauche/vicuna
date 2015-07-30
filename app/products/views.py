@@ -34,7 +34,7 @@ def product_add():
 	form.suppliers.choices = suppliers
 	if form.validate_on_submit():
 		# Storing the buying price as an integer
-		buying_price_int = form.buying_price.data * 100
+		buying_price_int = int(form.buying_price.data * 100)
 
 		product = Product(name=form.name.data, reference=form.reference.data,
 							supplier_reference=form.supplier_reference.data,
