@@ -1,0 +1,56 @@
+<!-- extend base layout -->
+{% extends "backend/base.html" %}
+
+{% block content %}
+	<h1>Add a product</h1>
+	{% include "backend/flash.html" %}
+	<form method="post" action="" name="add">
+	    {{ form.hidden_tag() }}
+	    <div class="row">
+	    	<div class="small-10 columns">
+	    		{{ form.name.label }} {{ form.name(size=100) }}
+	    		{% for error in form.name.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    </div>
+	    
+	    <div class="row">
+	    	<div class="small-4 columns">
+	    		{{ form.reference.label }} {{ form.reference(size=15) }}
+	    		{% for error in form.reference.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    	<div class="small-8 columns">
+	    		{{ form.supplier_reference.label }} {{ form.supplier_reference(size=15) }}
+	    		{% for error in form.supplier_reference.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    </div>
+
+	    <div class="row">
+	    	<div class="small-4 columns">
+	    		{{ form.buying_price.label }} {{ form.buying_price(size=6) }}
+	    		{% for error in form.buying_price.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    </div>
+	    
+	    <div class="row">
+	    	<div class="small-4 columns">
+	    		{{ form.suppliers.label }} {{ form.suppliers() }}
+	    		{% for error in form.suppliers.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    </div>
+	    
+	    <button type="submit" value="Add">Add</button>
+	</form>
+
+
+
+{% endblock %}

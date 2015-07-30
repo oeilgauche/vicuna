@@ -1,0 +1,71 @@
+<!-- extend base layout -->
+{% extends "backend/base.html" %}
+
+{% block content %}
+	<h1>Add a supplier</h1>
+	{% include "backend/flash.html" %}
+	<form method="post" action="" name="add">
+	    {{ form.hidden_tag() }}
+	    <div class="row">
+	    	<div class="small-10 columns">
+	    		{{ form.name.label }} {{ form.name(size=100) }}
+	    		{% for error in form.name.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    </div>
+
+	    <div class="row">
+	    	<div class="small-12 columns">
+	    		{{ form.address.label }} {{ form.address(size=50) }}
+	    		{% for error in form.address.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    </div>
+	    
+	    <div class="row">
+	    	<div class="small-4 columns">
+	    		{{ form.zip_code.label }} {{ form.zip_code(size=15) }}
+	    		{% for error in form.zip_code.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    	<div class="small-8 columns">
+	    		{{ form.city.label }} {{ form.city(size=15) }}
+	    		{% for error in form.city.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    </div>
+	    
+	    <div class="row">
+	    	<div class="small-4 columns">
+	    		{{ form.country.label }} {{ form.country(size=50) }}
+	    		{% for error in form.country.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    </div>
+	    
+	    <div class="row">
+	    	<div class="small-4 columns">
+	    		{{ form.phone.label }} {{ form.phone(size=50) }}
+	    		{% for error in form.phone.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    	<div class="small-8 columns">
+	    		{{ form.email.label }} {{ form.email(size=50) }}
+	    		{% for error in form.email.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    </div>
+	    
+	    <button type="submit" value="Add">Add</button>
+	</form>
+
+
+
+{% endblock %}

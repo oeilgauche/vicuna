@@ -1,0 +1,29 @@
+<!-- extend base layout -->
+{% extends "backend/base.html" %}
+
+{% block content %}
+<div class="small-12 columns">
+	<h1>Products</h1>
+	<a href="{{ url_for('products.product_add') }}" class="radius button">Add</a>
+	{% include "backend/flash.html" %}
+
+	<table>
+	{% for product in products %}
+		<tr>
+			<td>{{ product.reference }}</td>
+			<td><a href="{{ url_for('products.product_view', id=product.id) }}">{{ product.name }}</a></td>
+			<td>
+				{% for supplier in product.supplier %}
+				<a href="{{ url_for('suppliers.suppliers_view', id=supplier.id) }}">{{ supplier.name }}</a><br>
+				{% endfor %}
+			</td>
+			<td><a href="{{ url_for('products.product_edit', id=product.id) }}" class="radius button">Edit</a>
+			<td><a href="{{ url_for('products.product_delete', id=product.id) }}" class="radius button">Delete</a>
+		</tr>
+	{% endfor %}
+	</table>
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

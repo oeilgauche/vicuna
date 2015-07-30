@@ -1,0 +1,36 @@
+<!-- extend base layout -->
+{% extends "backend/base.html" %}
+
+{% block content %}
+<div class="small-12 columns">
+	<h1>{{ supplier.name }}</h1>
+	{% include "backend/flash.html" %}
+
+		<p>ID: {{ supplier.id }}</p>
+		<p>Address:</p>
+		<p>{{ supplier.address }}<br>
+		{{ supplier.zip_code }} {{ supplier.city }}<br>
+		{{ supplier.country }}</p>
+		<p>Phone: {{ supplier.phone }}</p>
+		<p>Email: {{ supplier.email }}</p>
+		
+		<table>
+			{% for product in supplier.products %}
+			<tr>
+				<td>{{ product.reference }}</td>
+				<td><a href="{{ url_for('products.product_view', id=product.id) }}">{{ product.name }}</a></td>
+			</tr>
+			{% endfor %}
+		</table>
+		
+		
+
+
+
+		<a href="{{ url_for('suppliers.suppliers_edit', id=supplier.id) }}" class="radius button" >Edit</a>
+
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

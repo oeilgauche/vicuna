@@ -1,0 +1,50 @@
+<!-- extend base layout -->
+{% extends "backend/base.html" %}
+
+{% block content %}
+	<h1>Edit {{ form.name.data }}</h1>
+	{% include "backend/flash.html" %}
+	<form method="post" action="" name="add">
+	    {{ form.hidden_tag() }}
+	    <div class="row">
+	    	<div class="small-10 columns">
+	    		{{ form.name.label }} {{ form.name(size=100) }}
+	    	</div>
+	    </div>
+
+	    <div class="row">
+	    	<div class="small-12 columns">
+	    		{{ form.address.label }} {{ form.address(size=50) }}
+	    	</div>
+	    </div>
+	    
+	    <div class="row">
+	    	<div class="small-4 columns">
+	    		{{ form.zip_code.label }} {{ form.zip_code(size=15) }}
+	    	</div>
+	    	<div class="small-8 columns">
+	    		{{ form.city.label }} {{ form.city(size=15) }}
+	    	</div>
+	    </div>
+	    
+	    <div class="row">
+	    	<div class="small-4 columns">
+	    		{{ form.country.label }} {{ form.country(size=50) }}
+	    	</div>
+	    </div>
+	    
+	    <div class="row">
+	    	<div class="small-4 columns">
+	    		{{ form.phone.label }} {{ form.phone(size=50) }}
+	    	</div>
+	    	<div class="small-8 columns">
+	    		{{ form.email.label }} {{ form.email(size=50) }}
+	    	</div>
+	    </div>
+	    
+	    <button type="submit" value="Add">Add</button>
+	</form>
+
+
+
+{% endblock %}

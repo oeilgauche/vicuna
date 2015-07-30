@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ title }}</title>
+	<link href="/static/css/foundation.css" rel="stylesheet">
+	<link href="/static/css/normalize.css" rel="stylesheet">
+
+	<script src="/static/js/vendor/jquery.js"></script>
+	<script src="/static/js/vendor/modernizr.js"></script>
+	<script src="/static/js/foundation/foundation.js"></script>
+	<script src="/static/js/foundation/foundation.topbar.js"></script>
+	<script src="/static/js/foundation/foundation.reveal.js"></script>
+	
+</head>
+<body>
+<nav class="top-bar" data-topbar role="navigation">
+	<ul class="title-area">
+		<li class="name"><h1><a href="{{ url_for('frontend.frontend_index') }}">Site</a></h1></li>
+	</ul>
+	<section class="top-bar-section">
+		<ul class="left">
+			<li><a href="{{ url_for('backend.backend_index') }}">Dashboard</a></li>
+			<li class="has-dropdown not-click">
+				<a href="{{ url_for('products.products_list') }}">Products</a>
+				<ul class="dropdown">
+					<li><a href="{{ url_for('products.product_add') }}">Add</a></li>
+					<li><a href="#">Edit</a></li>
+				</ul>
+			</li>
+			<li class="has-dropdown not-click">
+				<a href="{{ url_for('suppliers.suppliers_list') }}">Suppliers</a>
+				<ul class="dropdown">
+					<li><a href="{{ url_for('suppliers.suppliers_add') }}">Add</a></li>
+					<li><a href="#">Edit</a></li>
+				</ul>
+			</li>
+		</ul>
+	</section>
+</nav>
+<div class="row">
+	{% block content %}{% endblock %}
+</div>
+	{% block script %}{% endblock %}
+</body>
+</html>
