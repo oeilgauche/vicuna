@@ -19,6 +19,10 @@ db = SQLAlchemy(app)
 def not_found(error):
     return render_template('404.html'), 404
 
+# Import Babel
+from flask.ext.babel import Babel
+babel = Babel(app)
+
 # Import a module / component using its blueprint handler variable (mod_auth)
 from .frontend.views import frontend
 from .backend.views import backend

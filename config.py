@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Statement for enabling the development environment
 DEBUG = True
 
@@ -28,3 +30,9 @@ CSRF_SESSION_KEY = "secret"
 
 # Secret key for signing cookies
 SECRET_KEY = "secret"
+
+# Available languages for Babel
+LANGUAGES = {
+	'en': 'English',
+	'fr': 'Français'
+}
