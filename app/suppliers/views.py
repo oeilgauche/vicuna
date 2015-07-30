@@ -31,8 +31,8 @@ def suppliers_add():
     form = AddSupplier()
     if form.validate_on_submit():
         supplier = Supplier(name=form.name.data, address=form.address.data, zip_code=form.zip_code.data,
-            city=form.city.data, country=form.country.data, phone=form.phone.data,
-            email=form.email.data)
+                            city=form.city.data, country=form.country.data, phone=form.phone.data,
+                            email=form.email.data)
         db.session.add(supplier)
         db.session.commit()
         flash('Supplier added!', 'success')
@@ -69,14 +69,14 @@ def suppliers_edit(id):
 
 @suppliers.route('/delete/<int:id>', methods=['GET', 'POST'])
 def suppliers_delete(id):
-	supplier = Supplier.query.get_or_404(id)
-	db.session.delete(supplier)
-	db.session.commit()
-	flash('Supplier ' + supplier.name + ' deleted!', 'success')
-	return redirect(url_for('suppliers.suppliers_list'))
+    supplier = Supplier.query.get_or_404(id)
+    db.session.delete(supplier)
+    db.session.commit()
+    flash('Supplier ' + supplier.name + ' deleted!', 'success')
+    return redirect(url_for('suppliers.suppliers_list'))
 
 @suppliers.route('/view/<int:id>')
 def suppliers_view(id):
-	supplier = Supplier.query.get_or_404(id)
-	return render_template('suppliers/view.html', title='Supplier',
-							supplier=supplier)
+    supplier = Supplier.query.get_or_404(id)
+    return render_template('suppliers/view.html', title='Supplier',
+                            supplier=supplier)
