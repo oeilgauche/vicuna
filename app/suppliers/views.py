@@ -17,6 +17,10 @@ from .forms import AddSupplier
 # Import the models
 from .models import Supplier
 
+# Import Babel
+from app import babel
+from config import LANGUAGES
+
 # Set the route and accepted methods
 @suppliers.route('/')
 def suppliers_list():

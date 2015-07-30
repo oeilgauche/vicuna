@@ -18,6 +18,10 @@ from .forms import AddProduct
 from .models import Product
 from ..suppliers.models import Supplier
 
+# Import Babel
+from app import babel
+from config import LANGUAGES
+
 # Set the route and accepted methods
 @products.route('/')
 def products_list():
