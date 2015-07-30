@@ -14,6 +14,15 @@
                 {% endfor %}
 	    	</div>
 	    </div>
+
+	    <div class="row">
+	    	<div class="small-12 columns">
+	    		{{ form.description.label }} {{ form.form.description(cols="35", rows="5") }}
+	    		{% for error in form.description.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    </div>
 	    
 	    <div class="row">
 	    	<div class="small-4 columns">
@@ -22,9 +31,15 @@
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
 	    	</div>
-	    	<div class="small-8 columns">
+	    	<div class="small-4 columns">
 	    		{{ form.supplier_reference.label }} {{ form.supplier_reference(size=15) }}
 	    		{% for error in form.supplier_reference.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    	<div class="small-4 columns">
+	    		{{ form.ean.label }} {{ form.ean(size=13) }}
+	    		{% for error in form.ean.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
 	    	</div>

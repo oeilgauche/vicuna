@@ -1,3 +1,4 @@
+from flask.ext.babel import Babel
 from flask.ext.wtf import Form
 from wtforms import (StringField, BooleanField, TextAreaField, IntegerField, SelectField,
 					SelectMultipleField, DecimalField, widgets)
@@ -10,6 +11,8 @@ class AddProduct(Form):
 	reference = IntegerField('Reference', validators=[DataRequired()])
 	supplier_reference = StringField('Supplier Reference', validators=[DataRequired()])
 	buying_price = DecimalField('Buying Price', validators=[DataRequired()])
+	ean = IntegerField('EAN', validators=[DataRequired()])
+	description = TextAreaField('Description')
 	suppliers = SelectMultipleField('Suppliers',
 									option_widget=widgets.CheckboxInput(),
 									widget=widgets.ListWidget(prefix_label=False),

@@ -1,6 +1,6 @@
 # Import flask dependencies
-from flask import Blueprint, request, render_template, \
-                  flash, g, session, redirect, url_for
+from flask import (Blueprint, request, render_template,
+                  flash, g, session, redirect, url_for)
 
 # Import password / encryption helper tools
 from werkzeug import check_password_hash, generate_password_hash
@@ -42,8 +42,8 @@ def product_add():
 
 		product = Product(name=form.name.data, reference=form.reference.data,
 							supplier_reference=form.supplier_reference.data,
-							buying_price=buying_price_int
-							)
+							ean=form.ean.data, description=form.description.data,
+							buying_price=buying_price_int)
 		db.session.add(product)
 		db.session.commit()
 
@@ -72,6 +72,8 @@ def product_edit(id):
 		product.name = form.name.data
 		product.reference = form.reference.data
 		product.supplier_reference = form.supplier_reference.data
+		product.ean = form.ean.data
+		product.description = form.description.data
 		product.buying_price = form.buying_price.data * 100
 		product.supplier = []
 		db.session.add(product)
@@ -89,6 +91,8 @@ def product_edit(id):
 	form.name.data = product.name
 	form.reference.data = product.reference
 	form.supplier_reference.data = product.supplier_reference
+	form.ean.data = product.ean
+	form.description.data = product.description
 	form.buying_price.data = product.buying_price / 100
 	
 	return render_template('products/edit.html',

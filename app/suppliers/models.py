@@ -21,8 +21,5 @@ class Supplier(db.Model):
 								backref=db.backref('supplier', lazy='dynamic'),
 								lazy='dynamic')
 
-	def __init__(self, id):
-		self.id = id
-
 	def __repr__(self):
 		return '<Supplier %r>' % self.name
