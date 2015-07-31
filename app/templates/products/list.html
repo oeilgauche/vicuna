@@ -18,10 +18,10 @@
 				{% endfor %}
 			</td>
 			<td>
-				<a href="{{ url_for('products.product_edit', id=product.id) }}" class="radius button">Edit</a>
+				<a href="{{ url_for('products.product_edit', id=product.id) }}" class="radius button tiny">Edit</a>
 			</td>
 			<td>
-				<a href="{{ url_for('products.product_delete', id=product.id) }}" class="radius button">Delete</a>
+				<a href="{{ url_for('products.product_delete', id=product.id) }}" class="radius button tiny">Delete</a>
 			</td>
 		</tr>
 	{% endfor %}

@@ -11,7 +11,7 @@
 				<td>{{ vat_item.name }}</td>
 				<td>{{ vat_item.amount }} %</td>
 				<td>
-					<a href="{{ url_for('settings.vat_delete', id=vat_item.id) }}" class="radius button">Delete</a>
+					<a href="{{ url_for('settings.vat_delete', id=vat_item.id) }}" class="radius button tiny">Delete</a>
 				</td>
 			</tr>
 		{% endfor %}

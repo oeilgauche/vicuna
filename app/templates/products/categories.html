@@ -10,7 +10,7 @@
 		<tr>
 			<td>{{ category.code }}</td>
 			<td>{{ category.name }}</td>
-			<td><a href="{{ url_for('products.category_delete', id=category.id) }}" class="radius button">Delete</a>
+			<td><a href="{{ url_for('products.category_delete', id=category.id) }}" class="radius button tiny">Delete</a>
 		</tr>
 	{% endfor %}
 	</table>
