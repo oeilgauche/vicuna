@@ -2,7 +2,7 @@
 {% extends "backend/base.html" %}
 
 {% block content %}
-	<h1>Edit a product</h1>
+	<h1>Edit Product "{{ form.name.data }}"</h1>
 	{% include "backend/flash.html" %}
 	<form method="post" action="" name="add">
 	    {{ form.hidden_tag() }}
@@ -69,6 +69,8 @@
 	    	</div>
 	    </div>
 	    
+<p>{{ cat.id }}</p>
+
 	    <button type="submit" value="Add">Add</button>
 	</form>
 

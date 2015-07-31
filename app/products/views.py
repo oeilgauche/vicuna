@@ -85,18 +85,29 @@ def product_edit(id):
 		product.description = form.description.data
 		product.buying_price = form.buying_price.data * 100
 		product.supplier = []
+		#product.category = []
 		db.session.add(product)
 		db.session.commit()
+
 		for s in form.suppliers.data:
 			supp = Supplier.query.filter_by(id=s).first()
 			supp.products.append(product)
 			db.session.add(supp)
 			db.session.commit()
+
+		for c in form.categories.data:
+			cat = Category.query.filter_by(id=c).first()
+			cat.products.append(product)
+			db.session.add(cat)
+			db.session.commit()
+
 		flash('Product %s (Reference %s) modified!' % (product.name, product.reference), 'success')
 		return redirect(url_for('products.products_list'))
 
 	#Populate the fields
 	form.suppliers.data = [s.id for s in product.supplier]
+	form.categories.data = [0, product.category.id]
+	cat = product.category.id
 	form.name.data = product.name
 	form.reference.data = product.reference
 	form.supplier_reference.data = product.supplier_reference
@@ -107,7 +118,8 @@ def product_edit(id):
 	return render_template('products/edit.html',
 							title='Edit product',
 							action="edit",
-							form=form)
+							form=form,
+							cat=cat)
 
 
 @products.route('/delete/<int:id>', methods=['GET', 'POST'])
