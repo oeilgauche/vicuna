@@ -75,6 +75,7 @@ def product_edit(id):
 	form = AddProduct()
 	# Create list of suppliers
 	form.suppliers.choices = [(s.id, s.name) for s in Supplier.query.order_by(Supplier.name)]
+	form.categories.choices = [(c.id, c.name) for c in Category.query.order_by(Category.code)]
 	
 	if form.validate_on_submit():
 		product.name = form.name.data
