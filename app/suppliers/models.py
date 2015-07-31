@@ -6,6 +6,7 @@ suppliers_products = db.Table('suppliers_products',
 	)
 
 class Supplier(db.Model):
+	"""Create Supplier Class"""
 	id = db.Column(db.Integer, primary_key=True)
 	date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
 	date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
