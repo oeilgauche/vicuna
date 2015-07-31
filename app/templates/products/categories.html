@@ -1,0 +1,41 @@
+<!-- extend base layout -->
+{% extends "backend/base.html" %}
+
+{% block content %}
+	<h1>Categories</h1>
+	{% include "backend/flash.html" %}
+
+	<table>
+	{% for category in categories %}
+		<tr>
+			<td>{{ category.code }}</td>
+			<td>{{ category.name }}</td>
+			<td><a href="{{ url_for('products.category_delete', id=category.id) }}" class="radius button">Delete</a>
+		</tr>
+	{% endfor %}
+	</table>
+
+	<h4>Add a Category</h4>
+	<form method="post" action="" name="add">
+	    {{ form.hidden_tag() }}
+	    <div class="row">
+	    	<div class="small-2 columns">
+	    		{{ form.code.label }} {{ form.code(size=15) }}
+	    		{% for error in form.code.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    	<div class="small-8 columns end">
+	    		{{ form.name.label }} {{ form.name(size=15) }}
+	    		{% for error in form.name.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    </div>
+	    
+	    <button type="submit" value="Add">Add</button>
+	</form>
+
+
+
+{% endblock %}

@@ -39,4 +39,5 @@ app.register_blueprint(products)
 
 # Build the database:
 # This will create the database file using SQLAlchemy
-db.create_all()
+# db.create_all()
+# Already built with Flask-Migrate through manage.py

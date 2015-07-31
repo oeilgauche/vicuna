@@ -12,10 +12,10 @@ from app import db
 products = Blueprint('products', __name__, url_prefix='/backend/products')
 
 # Import the forms
-from .forms import AddProduct
+from .forms import AddProduct, AddCategory
 
 # Import the models
-from .models import Product
+from .models import Product, Category
 from ..suppliers.models import Supplier
 
 # Import Babel
@@ -35,7 +35,9 @@ def products_list():
 def product_add():
 	form = AddProduct()
 	suppliers = [(s.id, s.name) for s in Supplier.query.order_by(Supplier.name)]
+	categories = [(c.id, c.name) for c in Category.query.order_by(Category.code)]
 	form.suppliers.choices = suppliers
+	form.categories.choices = categories
 	if form.validate_on_submit():
 		# Storing the buying price as an integer
 		buying_price_int = int(form.buying_price.data * 100)
@@ -53,6 +55,12 @@ def product_add():
 			db.session.add(supp)
 			db.session.commit()
 		
+		for c in form.categories.data:
+			cat = Category.query.filter_by(id=c).first()
+			cat.products.append(product)
+			db.session.add(cat)
+			db.session.commit()
+
 		flash('Product %s added!' % form.name.data, 'success')
 		return redirect(url_for('products.products_list'))
 	return render_template('products/add.html',
@@ -115,3 +123,28 @@ def product_view(id):
 	product = Product.query.get_or_404(id)
 	return render_template('products/view.html', title='Products',
 							product=product)
+
+
+@products.route('/categories', methods=['GET', 'POST'])
+def categories():
+	form = AddCategory()
+	categories = Category.query.order_by(Category.code)
+	if form.validate_on_submit():
+		category = Category(name=form.name.data, code=form.code.data)
+		db.session.add(category)
+		db.session.commit()
+		flash('Category %s added!' % form.name.data, 'success')
+		return redirect(url_for('products.categories'))
+	return render_template('products/categories.html',
+							title='Categories',
+							categories=categories,
+							form=form)
+
+
+@products.route('/categories/delete/<int:id>', methods=['GET', 'POST'])
+def category_delete(id):
+	category = Category.query.get_or_404(id)
+	db.session.delete(category)
+	db.session.commit()
+	flash('Category %s deleted!' % category.name, 'success')
+	return redirect(url_for('products.categories'))

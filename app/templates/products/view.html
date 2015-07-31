@@ -10,6 +10,7 @@
 		<p>Reference: {{ product.reference }}</p>
 		<p>Supplier Reference: {{ product.supplier_reference }}</p>
 		<p>EAN: {{ product.ean }}</p>
+		<p>Category: {{ product.category.name }}</p>
 		<p>Suppplier(s):</p>
 		<ul>
 			{% for supplier in product.supplier %}

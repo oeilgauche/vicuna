@@ -17,7 +17,7 @@
 
 	    <div class="row">
 	    	<div class="small-12 columns">
-	    		{{ form.description.label }} {{ form.form.description(cols="35", rows="5") }}
+	    		{{ form.description.label }} {{ form.description(cols="35", rows="5") }}
 	    		{% for error in form.description.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
@@ -61,9 +61,10 @@
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
 	    	</div>
+	    	
 	    </div>
 	    
-	    <button type="submit" value="Add">Edit</button>
+	    <button type="submit" value="Add">Add</button>
 	</form>
 
 

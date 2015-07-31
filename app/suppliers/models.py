@@ -8,7 +8,8 @@ suppliers_products = db.Table('suppliers_products',
 class Supplier(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-	date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+	date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
+								onupdate=db.func.current_timestamp())
 	name = db.Column(db.String(100))
 	address = db.Column(db.String(50))
 	zip_code = db.Column(db.Integer)
