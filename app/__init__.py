@@ -23,19 +23,19 @@ def not_found(error):
 from flask.ext.babel import Babel
 babel = Babel(app)
 
-# Import a module / component using its blueprint handler variable (mod_auth)
+# Import a module / component using its blueprint handler variable
+from .settings.views import settings
 from .frontend.views import frontend
 from .backend.views import backend
 from .suppliers.views import suppliers
 from .products.views import products
 
 # Register blueprint(s)
+app.register_blueprint(settings)
 app.register_blueprint(frontend)
 app.register_blueprint(backend)
 app.register_blueprint(suppliers)
 app.register_blueprint(products)
-# app.register_blueprint(xyz_module)
-# ..
 
 # Build the database:
 # This will create the database file using SQLAlchemy

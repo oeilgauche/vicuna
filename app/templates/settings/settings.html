@@ -1,0 +1,39 @@
+<!-- extend base layout -->
+{% extends "backend/base.html" %}
+
+{% block content %}
+	<h1>Settings</h1>
+	{% include "backend/flash.html" %}
+	<h4>VAT</h4>
+	<table>
+		{% for vat_item in vat_items %}
+			<tr>
+				<td>{{ vat_item.name }}</td>
+				<td>{{ vat_item.amount }} %</td>
+				<td>
+					<a href="{{ url_for('settings.vat_delete', id=vat_item.id) }}" class="radius button">Delete</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	
+	<form method="post" action="" name="add">
+	    {{ add_vat.hidden_tag() }}
+	    <div class="row">
+		    <div class="small-4 columns">
+		    		{{ add_vat.name.label }} {{ add_vat.name() }}
+		    		{% for error in add_vat.name.errors %}
+		    			<small class="error">{{ error }}</small>
+	                {% endfor %}
+		    </div>
+		    <div class="small-2 columns">
+		    		{{ add_vat.amount.label }} {{ add_vat.amount() }}
+		    		{% for error in add_vat.amount.errors %}
+		    			<small class="error">{{ error }}</small>
+	                {% endfor %}
+		    </div>
+		    <div class="small-2 columns end">
+		    	<button type="submit" value="Add">Add</button>
+		    </div>
+	</form>
+{% endblock %}

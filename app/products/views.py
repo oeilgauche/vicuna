@@ -134,7 +134,8 @@ def product_delete(id):
 @products.route('/view/<int:id>', methods=['GET', 'POST'])
 def product_view(id):
 	product = Product.query.get_or_404(id)
-	return render_template('products/view.html', title='Products',
+	product.buying_price = float(product.buying_price) / 100
+	return render_template('products/view.html', title='Product',
 							product=product)
 
 

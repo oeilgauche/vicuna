@@ -13,8 +13,8 @@
 		<tr>
 			<td>{{ supplier.id }}</td>
 			<td><a href="{{ url_for('suppliers.suppliers_view', id=supplier.id) }}">{{ supplier.name }}</a></td>
-			<td><a href="{{ url_for('suppliers.suppliers_edit', id=supplier.id) }}" class="radius button">Edit</a>
-			<td><a href="{{ url_for('suppliers.suppliers_delete', id=supplier.id) }}" class="radius button">Delete</a>
+			<td><a href="{{ url_for('suppliers.suppliers_edit', id=supplier.id) }}" class="radius button">Edit</a></td>
+			<td><a href="{{ url_for('suppliers.suppliers_delete', id=supplier.id) }}" class="radius button">Delete</a></td>
 		</tr>
 	{% endfor %}
 	</table>
