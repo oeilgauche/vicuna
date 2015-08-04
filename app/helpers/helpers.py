@@ -4,4 +4,4 @@ def to_int(num):
 
 def to_dec(num):
 	"""Convert to decimal after being retrieved from DB"""
-	return num / 100
+	return "%.2f" % (float(num) / 100)

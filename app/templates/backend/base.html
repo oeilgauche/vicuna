@@ -1,53 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{{ title }}</title>
-	<link href="/static/css/foundation.css" rel="stylesheet">
-	<link href="/static/css/normalize.css" rel="stylesheet">
-
-	<script src="/static/js/vendor/jquery.js"></script>
-	<script src="/static/js/vendor/modernizr.js"></script>
-	<script src="/static/js/foundation/foundation.js"></script>
-	<script src="/static/js/foundation/foundation.topbar.js"></script>
-	<script src="/static/js/foundation/foundation.reveal.js"></script>
+	<link href="/static/css/backend/styles.css" rel="stylesheet">
 	
 </head>
 <body>
-<nav class="top-bar" data-topbar role="navigation">
-	<ul class="title-area">
-		<li class="name"><h1><a href="{{ url_for('frontend.frontend_index') }}">Site</a></h1></li>
-	</ul>
-	<section class="top-bar-section">
-		<ul class="left">
-			<li><a href="{{ url_for('backend.backend_index') }}">Dashboard</a></li>
-			<li class="has-dropdown not-click">
-				<a href="{{ url_for('products.products_list') }}">Products</a>
-				<ul class="dropdown">
-					<li><a href="{{ url_for('products.product_add') }}">Add</a></li>
-					<li><a href="{{ url_for('products.categories') }}">Categories</a></li>
-				</ul>
-			</li>
-			<li class="has-dropdown not-click">
-				<a href="{{ url_for('suppliers.suppliers_list') }}">Suppliers</a>
-				<ul class="dropdown">
-					<li><a href="{{ url_for('suppliers.suppliers_add') }}">Add</a></li>
-					<li><a href="#">Edit</a></li>
-				</ul>
-			</li>
-		</ul>
-		<ul class="right">
-			<li class="has-dropdown not-click">
-				<a href="#">User</a>
-				<ul class="dropdown">
-					<li><a href="{{ url_for('settings.settings_list') }}">Settings</a></li>
-				</ul>
-			</li>
-		</ul>
-	</section>
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+	      	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+	      	</button>
+      	  	<a class="navbar-brand" href="{{ url_for('frontend.frontend_index') }}">Site</a>
+    	</div>
+		
+	<!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="{{ url_for('backend.backend_index') }}">Dashboard <span class="sr-only">(current)</span></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Products <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+          	<li><a href="{{ url_for('products.products_list') }}">List</a></li>
+            <li><a href="{{ url_for('products.product_add') }}">Add</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ url_for('products.categories') }}">Categories</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Suppliers <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+          	<li><a href="{{ url_for('suppliers.suppliers_list') }}">List</a></li>
+            <li><a href="{{ url_for('suppliers.suppliers_add') }}">Add</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">User</a></li>
+        <li><a href="{{ url_for('settings.settings_list') }}">Settings</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+
+
 </nav>
-<div class="row">
+<div class="container-fluid">
 	{% block content %}{% endblock %}
 </div>
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/vendor/jquery-1.11.3.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
 	{% block script %}{% endblock %}
 </body>
 </html>

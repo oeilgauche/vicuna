@@ -29,6 +29,8 @@ from config import LANGUAGES
 @products.route('/')
 def products_list():
     products = Product.query.order_by(Product.reference)
+    for product in products:
+    	product.stock = to_dec(product.stock)
     return render_template('products/list.html',
                             title='Products',
                             products=products)
