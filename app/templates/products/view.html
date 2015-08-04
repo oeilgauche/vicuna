@@ -11,6 +11,8 @@
 		<p>Supplier Reference: {{ product.supplier_reference }}</p>
 		<p>EAN: {{ product.ean }}</p>
 		<p>Buying Price: {{ product.buying_price }} Euros</p>
+		<p>Stock : {{ product.stock }}</p>
+
 		<p>Category: {{ product.category.name }}</p>
 		<p>Suppplier(s):</p>
 		<ul>
@@ -20,6 +22,15 @@
 		</ul>
 
 		<a href="{{ url_for('products.product_edit', id=product.id) }}" class="radius button" >Edit</a>
+
+
+		<p>Stock History :</p>
+		<ul>
+			{% for stock in product.stock_history %}
+			<li>{{ stock.date_created }}: {{ stock.amount }}</a></li>
+			{% endfor %}
+		</ul>
+			
 
 
 {% endblock %}

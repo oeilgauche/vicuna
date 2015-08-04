@@ -53,6 +53,15 @@
                 {% endfor %}
 	    	</div>
 	    </div>
+
+	    <div class="row">
+	    	<div class="small-4 columns">
+	    		{{ form.stock.label }} {{ form.stock(size=6) }}
+	    		{% for error in form.stock.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    </div>
 	    
 	    <div class="row">
 	    	<div class="small-4 columns">

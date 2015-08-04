@@ -15,8 +15,11 @@ products = Blueprint('products', __name__, url_prefix='/backend/products')
 from .forms import AddProduct, AddCategory
 
 # Import the models
-from .models import Product, Category
+from .models import Product, Category, StockHistory
 from ..suppliers.models import Supplier
+
+# Import helpers
+from ..helpers.helpers import to_int, to_dec
 
 # Import Babel
 from app import babel
@@ -40,13 +43,19 @@ def product_add():
 	form.categories.choices = categories
 	if form.validate_on_submit():
 		# Storing the buying price as an integer
-		buying_price_int = int(form.buying_price.data * 100)
+		buying_price_int = to_int(form.buying_price.data)
+		stock_int = to_int(form.stock.data)
 
 		product = Product(name=form.name.data, reference=form.reference.data,
 							supplier_reference=form.supplier_reference.data,
 							ean=form.ean.data, description=form.description.data,
-							buying_price=buying_price_int)
+							buying_price=buying_price_int, stock=stock_int)
 		db.session.add(product)
+		db.session.commit()
+
+		# Add stock to History
+		stock_history = StockHistory(amount=stock_int, product=product)
+		db.session.add(stock_history)
 		db.session.commit()
 
 		for s in form.suppliers.data:
@@ -83,10 +92,15 @@ def product_edit(id):
 		product.supplier_reference = form.supplier_reference.data
 		product.ean = form.ean.data
 		product.description = form.description.data
-		product.buying_price = form.buying_price.data * 100
+		product.buying_price = to_int(form.buying_price.data)
+		product.stock = to_int(form.stock.data)
 		product.supplier = []
 		#product.category = []
 		db.session.add(product)
+		db.session.commit()
+
+		stock_history = StockHistory(amount=to_int(form.stock.data), product=product)
+		db.session.add(stock_history)
 		db.session.commit()
 
 		for s in form.suppliers.data:
@@ -113,7 +127,8 @@ def product_edit(id):
 	form.supplier_reference.data = product.supplier_reference
 	form.ean.data = product.ean
 	form.description.data = product.description
-	form.buying_price.data = product.buying_price / 100
+	form.buying_price.data = to_dec(product.buying_price)
+	form.stock.data = to_dec(product.stock)
 	
 	return render_template('products/edit.html',
 							title='Edit product',
@@ -134,7 +149,8 @@ def product_delete(id):
 @products.route('/view/<int:id>', methods=['GET', 'POST'])
 def product_view(id):
 	product = Product.query.get_or_404(id)
-	product.buying_price = float(product.buying_price) / 100
+	product.buying_price = to_dec(product.buying_price)
+	product.stock = to_dec(product.stock)
 	return render_template('products/view.html', title='Product',
 							product=product)
 

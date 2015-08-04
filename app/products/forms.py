@@ -23,6 +23,7 @@ class AddProduct(Form):
 									widget=widgets.ListWidget(prefix_label=False),
 									coerce=int,
 									validators=[DataRequired()])
+	stock = DecimalField('Stock', validators=[DataRequired()])
 
 
 class AddCategory(Form):
