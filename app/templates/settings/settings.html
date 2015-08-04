@@ -4,6 +4,34 @@
 {% block content %}
 	<h1>Settings</h1>
 	{% include "backend/flash.html" %}
+	<form method="post" action="" name="add">
+	    {{ settings.hidden_tag() }}
+	    <div class="row">
+		    <div class="small-4 columns">
+		    		{{ settings.currency.label }} {{ settings.currency() }}
+		    		{% for error in settings.currency.errors %}
+		    			<small class="error">{{ error }}</small>
+	                {% endfor %}
+		    </div>
+		    <div class="small-4 columns">
+		    		{{ settings.file_repo.label }} {{ settings.file_repo() }}
+		    		{% for error in settings.file_repo.errors %}
+		    			<small class="error">{{ error }}</small>
+	                {% endfor %}
+		    </div>
+		    <div class="small-4 columns">
+		    		{{ settings.nb_of_stores.label }} {{ settings.nb_of_stores() }}
+		    		{% for error in settings.nb_of_stores.errors %}
+		    			<small class="error">{{ error }}</small>
+	                {% endfor %}
+		    </div>
+		</div>
+		<div class="row">
+			<div class="small-2 columns end">
+		    	<button type="submit" value="Add">Add</button>
+		    </div>
+		</div>
+	</form>
 	<h4>VAT</h4>
 	<table>
 		{% for vat_item in vat_items %}
@@ -35,5 +63,6 @@
 		    <div class="small-2 columns end">
 		    	<button type="submit" value="Add">Add</button>
 		    </div>
+		</div>
 	</form>
 {% endblock %}

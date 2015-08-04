@@ -1,5 +1,6 @@
 from app import db
 
+
 class Product(db.Model):
 	"""The Model for products"""
 	id = db.Column(db.Integer, primary_key=True)
@@ -17,8 +18,24 @@ class Product(db.Model):
 	category = db.relationship('Category',
 							backref=db.backref('products', order_by=id))
 
+	stock = db.Column(db.Integer)
+
 	def __repr__(self):
 		return '<Product %r>' % self.name
+
+
+class StockHistory(db.Model):
+	"""The Model for stock history"""
+	id = db.Column(db.Integer, primary_key=True)
+	date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
+	date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
+								onupdate=db.func.current_timestamp())
+	amount = db.Column(db.Integer)
+	product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+	product = db.relationship('Product',
+								backref=db.backref('stock_history',
+													order_by=date_created))
+
 
 class Category(db.Model):
 	"""The Model for the Products' Categories"""

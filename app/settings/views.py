@@ -12,10 +12,10 @@ from app import db
 settings = Blueprint('settings', __name__, url_prefix='/backend/settings')
 
 # Import the forms
-from .forms import AddVAT
+from .forms import AddVAT, UpdateSettings
 
 # Import the models
-from .models import VAT
+from .models import VAT, Settings
 from ..suppliers.models import Supplier
 from ..products.models import Product, Category
 
@@ -27,9 +27,27 @@ from config import LANGUAGES
 @settings.route('/', methods=['GET', 'POST'])
 def settings_list():
 	
-	add_vat = AddVAT()
+	# Settings area
+	settings_items = Settings.query.first()
+	settings = UpdateSettings(prefix="settings")
 
-	if add_vat.validate_on_submit():
+	if settings.validate_on_submit() and settings.settings_hidden.data:
+		update_settings = Settings(currency=settings.currency.data,
+									file_repo=settings.file_repo.data,
+									nb_of_stores=settings.nb_of_stores.data)
+		db.session.add(update_settings)
+		db.session.commit()
+		flash('Settings updated!', 'success')
+
+	
+	settings.currency.data = settings_items.currency
+	settings.file_repo.data = settings_items.file_repo
+	settings.nb_of_stores.data = settings_items.nb_of_stores
+
+	# VAT area
+	add_vat = AddVAT(prefix="add_vat")
+
+	if add_vat.validate_on_submit() and add_vat.vat_hidden.data:
 		amount = int(add_vat.amount.data * 100)
 		vat = VAT(name=add_vat.name.data,
 					amount=amount)
@@ -44,6 +62,7 @@ def settings_list():
 
 	return render_template('settings/settings.html',
                             title='Products',
+                            settings=settings,
                             vat_items=vat_items,
                             add_vat=add_vat)
 
