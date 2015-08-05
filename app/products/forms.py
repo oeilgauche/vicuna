@@ -11,6 +11,7 @@ class AddProduct(Form):
 	reference = IntegerField('Reference', validators=[DataRequired()])
 	supplier_reference = StringField('Supplier Reference', validators=[DataRequired()])
 	buying_price = DecimalField('Buying Price', validators=[DataRequired()])
+	selling_price_no_tax = DecimalField('Price b/ VAT', validators=[DataRequired()])
 	ean = IntegerField('EAN', validators=[DataRequired()])
 	description = TextAreaField('Description')
 	vat = SelectField('VAT', coerce=int, validators=[(DataRequired())])

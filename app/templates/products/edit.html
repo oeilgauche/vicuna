@@ -57,6 +57,12 @@
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
 	    	</div>
+	    	<div class="col-md-1">
+	    		{{ form.selling_price_no_tax.label }} {{ form.selling_price_no_tax(class_="form-control") }}
+	    		{% for error in form.selling_price_no_tax.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
 	    </div>
 
 	    <div class="row form-group">

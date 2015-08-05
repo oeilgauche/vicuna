@@ -1,5 +1,6 @@
 // Override Bootstrap variables here (defaults from bootstrap-sass v3.3.5):
 $navbar-border-radius: 0px;
+$icon-font-path: if($bootstrap-sass-asset-helper, "bootstrap/", "../../fonts/bootstrap/");
 //
 // Variables
 // --------------------------------------------------

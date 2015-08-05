@@ -13,6 +13,7 @@
 				<tr>
 					<th>#</th>
 					<th>Label</th>
+					<th>Price</th>
 					<th>Stock</th>
 					<th>Supplier</th>
 					<th></th>
@@ -24,6 +25,7 @@
 				<tr>
 					<td>{{ product.reference }}</td>
 					<td><a href="{{ url_for('products.product_view', id=product.id) }}">{{ product.name }}</a></td>
+					<td>{{ product.selling_price }} €</td>
 					<td>{{ product.stock }}</td>
 					<td>
 						{% for supplier in product.supplier %}

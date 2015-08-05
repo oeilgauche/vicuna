@@ -2,7 +2,9 @@
 {% extends "backend/base.html" %}
 
 {% block content %}
-	<h1>{{ product.name }}</h1>
+<div class="page-header">
+	<h1>{{ product.name }} <small><a href="{{ url_for('products.product_edit', id=product.id) }}" class="btn btn-primary btn-xs" >Edit</a></small></h1>
+</div>
 	{% include "backend/flash.html" %}
 <div class="row">
 	<div class="col-md-12">
@@ -11,35 +13,70 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-md-2">
 		<p><strong>Reference: </strong><br>{{ product.reference }}</p>
+	</div>
+	<div class="col-md-2">
 		<p><strong>Supplier Reference: </strong><br>{{ product.supplier_reference }}</p>
+	</div>
+	<div class="col-md-2">
 		<p><strong>EAN: </strong><br>{{ product.ean }}</p>
 	</div>
-	<div class="col-md-4">
-		<p><strong>Buying Price: </strong><br>{{ product.buying_price }} Euros</p>
-		<p><strong>Category: </strong><br>{{ product.category.name }}</p>
+</div>
+<div class="row">
+	<div class="col-md-1">
+		<p><strong>Buying Price: </strong><br>{{ product.buying_price }} €</p>
+	</div>
+	<div class="col-md-1">
+		<p><strong>Margin: </strong><br>{{ margin }} %</p>
+	</div>
+	<div class="col-md-1">
+		<p><strong>Price b/ VAT: </strong><br>{{ product.selling_price_no_tax }} €</p>
+	</div>
+	<div class="col-md-1">
+		<p><strong>VAT: </strong><br>{{ product.vat.amount }} %</p>
+	</div>
+	<div class="col-md-1">
+		<p><strong>Price: </strong><br>{{ product.selling_price }} €</p>
 	</div>
 </div>
-
-		<p>Suppplier(s):</p>
+<div class="row">
+	<div class="col-md-2">
+		<p><strong>Suppplier(s):</strong></p>
 		<ul>
 			{% for supplier in product.supplier %}
 			<li><a href="{{ url_for('suppliers.suppliers_view', id=supplier.id) }}">{{ supplier.name }}</a></li>
 			{% endfor %}
 		</ul>
+	</div>
+	<div class="col-md-2">
+		<p><strong>Category: </strong><br>{{ product.category.name }}</p>
+	</div>
+</div>
+		
 
-		<a href="{{ url_for('products.product_edit', id=product.id) }}" class="radius button" >Edit</a>
+<div class="row">
+	<div class="col-md-12">
 
-
-		<p>Stock History :</p>
-		<ul>
-			{% for stock in product.stock_history %}
-			<li>{{ stock.date_created }}: {{ stock.amount }}</a></li>
-			{% endfor %}
+		<ul class="nav nav-tabs" role="tablist">
+		    <li role="presentation" class="active"><a href="#stock" aria-controls="stock" role="tab" data-toggle="tab">Stock History</a></li>
+		    <li role="presentation"><a href="#price" aria-controls="price" role="tab" data-toggle="tab">Price History</a></li>
 		</ul>
-			
 
+		<!-- Tab panes -->
+		<div class="tab-content">
+		    <div role="tabpanel" class="tab-pane active" id="stock">
+		    	<ul>
+				{% for stock in product.stock_history %}
+					<li>{{ stock.date_created }}: {{ stock.amount }}</a></li>
+				{% endfor %}
+				</ul>
+		    </div>
+		    <div role="tabpanel" class="tab-pane" id="price">...</div>
+		</div>
+
+	</div>
+</div>
 
 {% endblock %}
 

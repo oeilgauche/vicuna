@@ -20,7 +20,8 @@ from ..suppliers.models import Supplier
 from ..settings.models import VAT
 
 # Import helpers
-from ..helpers.helpers import to_int, to_dec, to_dec_string
+from ..helpers.helpers import (to_int, to_dec, to_dec_string, add_vat,
+								calc_margin)
 
 # Import Babel
 from app import babel
@@ -32,6 +33,7 @@ def products_list():
     products = Product.query.order_by(Product.reference)
     for product in products:
     	product.stock = to_dec_string(product.stock)
+    	product.selling_price = to_dec_string(product.selling_price)
     return render_template('products/list.html',
                             title='Products',
                             products=products)
@@ -50,11 +52,16 @@ def product_add():
 		# Storing the buying price as an integer
 		buying_price_int = to_int(form.buying_price.data)
 		stock_int = to_int(form.stock.data)
+		selling_price_no_tax_int = to_int(form.selling_price_no_tax.data)
+		selling_price = int(add_vat(to_int(form.selling_price_no_tax.data), form.vat.data))
 
 		product = Product(name=form.name.data, reference=form.reference.data,
 							supplier_reference=form.supplier_reference.data,
 							ean=form.ean.data, description=form.description.data,
-							buying_price=buying_price_int, stock=stock_int,
+							buying_price=buying_price_int,
+							selling_price_no_tax=selling_price_no_tax_int,
+							selling_price=selling_price,
+							stock=stock_int,
 							vat_id=form.vat.data)
 		db.session.add(product)
 		db.session.commit()
@@ -70,16 +77,17 @@ def product_add():
 			db.session.add(supp)
 			db.session.commit()
 		
-		for c in form.categories.data:
-			cat = Category.query.filter_by(id=c).first()
-			cat.products.append(product)
-			db.session.add(cat)
-			db.session.commit()
+		c = form.categories.data
+		cat = Category.query.filter_by(id=c).first()
+		cat.products.append(product)
+		db.session.add(cat)
+		db.session.commit()
 
 		flash('Product %s added!' % form.name.data, 'success')
 		return redirect(url_for('products.products_list'))
 	return render_template('products/add.html',
 							title='Add a Product',
+							action='add',
 							form=form)
 
 
@@ -100,6 +108,8 @@ def product_edit(id):
 		product.ean = form.ean.data
 		product.description = form.description.data
 		product.buying_price = to_int(form.buying_price.data)
+		product.selling_price_no_tax = to_int(form.selling_price_no_tax.data)
+		product.selling_price = int(add_vat(to_int(form.selling_price_no_tax.data), form.vat.data))
 		product.vat_id=form.vat.data
 		product.stock = to_int(form.stock.data)
 		product.supplier = []
@@ -135,12 +145,13 @@ def product_edit(id):
 	form.ean.data = product.ean
 	form.description.data = product.description
 	form.buying_price.data = to_dec(product.buying_price)
+	form.selling_price_no_tax.data = to_dec(product.selling_price_no_tax)
 	form.vat.data = product.vat_id
 	form.stock.data = to_dec(product.stock)
 	
-	return render_template('products/edit.html',
+	return render_template('products/add.html',
 							title='Edit product',
-							action="edit",
+							action='edit',
 							form=form)
 
 
@@ -158,8 +169,12 @@ def product_view(id):
 	product = Product.query.get_or_404(id)
 	product.buying_price = to_dec(product.buying_price)
 	product.stock = to_dec(product.stock)
+	product.vat.amount = to_dec_string(product.vat.amount)
+	product.selling_price_no_tax = to_dec_string(product.selling_price_no_tax)
+	product.selling_price = to_dec_string(product.selling_price)
+	margin = calc_margin(product.buying_price, product.selling_price_no_tax)
 	return render_template('products/view.html', title='Product',
-							product=product)
+							product=product, margin=margin)
 
 
 @products.route('/categories', methods=['GET', 'POST'])

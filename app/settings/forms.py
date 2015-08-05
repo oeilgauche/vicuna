@@ -16,7 +16,7 @@ class AddVAT(Form):
 
 class UpdateSettings(Form):
 	currency = SelectField('Currency', 
-							choices=[('euro', 'Euros'), ('gbp', 'GBP')],
+							choices=[('euros', 'Euros'), ('gbp', 'GBP')],
 							validators=[DataRequired()])
 	file_repo = SelectField('File Repository',
 							choices=[('local', 'Local'), ('s3', 'Amazon S3')], 
