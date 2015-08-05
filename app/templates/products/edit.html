@@ -1,86 +1,93 @@
-<!-- extend base layout -->
 {% extends "backend/base.html" %}
 
 {% block content %}
-	<h1>Edit Product "{{ form.name.data }}"</h1>
+	<h1>Edit "{{ form.name.data }}"</h1>
 	{% include "backend/flash.html" %}
 	<form method="post" action="" name="add">
 	    {{ form.hidden_tag() }}
-	    <div class="row">
-	    	<div class="small-10 columns">
-	    		{{ form.name.label }} {{ form.name(size=100) }}
+	    <div class="row form-group">
+	    	<div class="col-md-6">
+	    		{{ form.name.label }} {{ form.name(class_="form-control") }}
 	    		{% for error in form.name.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
 	    	</div>
 	    </div>
 
-	    <div class="row">
-	    	<div class="small-12 columns">
-	    		{{ form.description.label }} {{ form.description(cols="35", rows="5") }}
+	    <div class="row form-group">
+	    	<div class="col-md-6">
+	    		{{ form.description.label }} {{ form.description(cols="35", rows="5", class_="form-control") }}
 	    		{% for error in form.description.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
 	    	</div>
 	    </div>
 	    
-	    <div class="row">
-	    	<div class="small-4 columns">
-	    		{{ form.reference.label }} {{ form.reference(size=15) }}
+	    <div class="row form-group">
+	    	<div class="col-md-2">
+	    		{{ form.reference.label }} {{ form.reference(size=15, class_="form-control") }}
 	    		{% for error in form.reference.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
 	    	</div>
-	    	<div class="small-4 columns">
-	    		{{ form.supplier_reference.label }} {{ form.supplier_reference(size=15) }}
+	    	<div class="col-md-2">
+	    		{{ form.supplier_reference.label }} {{ form.supplier_reference(size=15, class_="form-control") }}
 	    		{% for error in form.supplier_reference.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
 	    	</div>
-	    	<div class="small-4 columns">
-	    		{{ form.ean.label }} {{ form.ean(size=13) }}
+	    	<div class="col-md-2">
+	    		{{ form.ean.label }} {{ form.ean(size=13, class_="form-control") }}
 	    		{% for error in form.ean.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
 	    	</div>
 	    </div>
 
-	    <div class="row">
-	    	<div class="small-4 columns">
-	    		{{ form.buying_price.label }} {{ form.buying_price(size=6) }}
+	    <div class="row form-group">
+	    	<div class="col-md-1">
+	    		{{ form.buying_price.label }} {{ form.buying_price(size=6, class_="form-control") }}
 	    		{% for error in form.buying_price.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    	<div class="col-md-2">
+	    		{{ form.vat.label }} {{ form.vat(class_="form-control") }}
+	    		{% for error in form.vat.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
 	    	</div>
 	    </div>
 
-	    <div class="row">
-	    	<div class="small-4 columns">
-	    		{{ form.stock.label }} {{ form.stock(size=6) }}
+	    <div class="row form-group">
+	    	<div class="col-md-1">
+	    		{{ form.stock.label }} {{ form.stock(size=6, class_="form-control") }}
 	    		{% for error in form.stock.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
 	    	</div>
 	    </div>
 	    
-	    <div class="row">
-	    	<div class="small-4 columns">
-	    		{{ form.suppliers.label }} {{ form.suppliers() }}
+	    <div class="row form-group">
+	    	<div class="col-md-2">
+	    		
+	    		{{ form.suppliers.label }} {{ form.suppliers(class_="form-control") }}
 	    		{% for error in form.suppliers.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
+                
 	    	</div>
-	    	<div class="small-4 columns end">
-	    		{{ form.categories.label }} {{ form.categories() }}
+	    	<div class="col-md-2">
+	    		
+	    		{{ form.categories.label }} {{ form.categories(class_="form-control") }}
 	    		{% for error in form.categories.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
+                
 	    	</div>
 	    </div>
 	    
-<p>{{ cat.id }}</p>
-
-	    <button type="submit" value="Add">Add</button>
+	    <button type="submit" class="btn btn-primary" value="Save">Save</button>
 	</form>
 
 

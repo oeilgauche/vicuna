@@ -6,28 +6,28 @@
 	{% include "backend/flash.html" %}
 	<form method="post" action="" name="add">
 	    {{ settings.hidden_tag() }}
-	    <div class="row">
-		    <div class="small-4 columns">
+	    <div class="row form-group">
+		    <div class="col-md-4">
 		    		{{ settings.currency.label }} {{ settings.currency() }}
 		    		{% for error in settings.currency.errors %}
 		    			<small class="error">{{ error }}</small>
 	                {% endfor %}
 		    </div>
-		    <div class="small-4 columns">
+		    <div class="col-md-4">
 		    		{{ settings.file_repo.label }} {{ settings.file_repo() }}
 		    		{% for error in settings.file_repo.errors %}
 		    			<small class="error">{{ error }}</small>
 	                {% endfor %}
 		    </div>
-		    <div class="small-4 columns">
+		    <div class="col-md-4">
 		    		{{ settings.nb_of_stores.label }} {{ settings.nb_of_stores() }}
 		    		{% for error in settings.nb_of_stores.errors %}
 		    			<small class="error">{{ error }}</small>
 	                {% endfor %}
 		    </div>
 		</div>
-		<div class="row">
-			<div class="small-2 columns end">
+		<div class="row form-group">
+			<div class="col-md-2">
 		    	<button type="submit" value="Add">Add</button>
 		    </div>
 		</div>
@@ -47,20 +47,20 @@
 	
 	<form method="post" action="" name="add">
 	    {{ add_vat.hidden_tag() }}
-	    <div class="row">
-		    <div class="small-4 columns">
+	    <div class="row form-group">
+		    <div class="col-md-4">
 		    		{{ add_vat.name.label }} {{ add_vat.name() }}
 		    		{% for error in add_vat.name.errors %}
 		    			<small class="error">{{ error }}</small>
 	                {% endfor %}
 		    </div>
-		    <div class="small-2 columns">
+		    <div class="col-md-2">
 		    		{{ add_vat.amount.label }} {{ add_vat.amount() }}
 		    		{% for error in add_vat.amount.errors %}
 		    			<small class="error">{{ error }}</small>
 	                {% endfor %}
 		    </div>
-		    <div class="small-2 columns end">
+		    <div class="col-md-2">
 		    	<button type="submit" value="Add">Add</button>
 		    </div>
 		</div>

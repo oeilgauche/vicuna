@@ -2,18 +2,26 @@
 {% extends "backend/base.html" %}
 
 {% block content %}
-<div class="small-12 columns">
 	<h1>{{ product.name }}</h1>
 	{% include "backend/flash.html" %}
-		<p>Description:</p>
+<div class="row">
+	<div class="col-md-12">
+		<strong>Description:</strong>
 		<p>{{ product.description }}</p>
-		<p>Reference: {{ product.reference }}</p>
-		<p>Supplier Reference: {{ product.supplier_reference }}</p>
-		<p>EAN: {{ product.ean }}</p>
-		<p>Buying Price: {{ product.buying_price }} Euros</p>
-		<p>Stock : {{ product.stock }}</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<p><strong>Reference: </strong><br>{{ product.reference }}</p>
+		<p><strong>Supplier Reference: </strong><br>{{ product.supplier_reference }}</p>
+		<p><strong>EAN: </strong><br>{{ product.ean }}</p>
+	</div>
+	<div class="col-md-4">
+		<p><strong>Buying Price: </strong><br>{{ product.buying_price }} Euros</p>
+		<p><strong>Category: </strong><br>{{ product.category.name }}</p>
+	</div>
+</div>
 
-		<p>Category: {{ product.category.name }}</p>
 		<p>Suppplier(s):</p>
 		<ul>
 			{% for supplier in product.supplier %}

@@ -45,16 +45,22 @@
 	    </div>
 
 	    <div class="row form-group">
-	    	<div class="col-md-2">
+	    	<div class="col-md-1">
 	    		{{ form.buying_price.label }} {{ form.buying_price(size=6, class_="form-control") }}
 	    		{% for error in form.buying_price.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    	<div class="col-md-2">
+	    		{{ form.vat.label }} {{ form.vat(class_="form-control") }}
+	    		{% for error in form.vat.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
 	    	</div>
 	    </div>
 
 	    <div class="row form-group">
-	    	<div class="col-md-2">
+	    	<div class="col-md-1">
 	    		{{ form.stock.label }} {{ form.stock(size=6, class_="form-control") }}
 	    		{% for error in form.stock.errors %}
 	    			<small class="error">{{ error }}</small>
@@ -63,21 +69,21 @@
 	    </div>
 	    
 	    <div class="row form-group">
-	    	<div class="col-md-3">
-	    		<div class="checkbox">
-	    		{{ form.suppliers.label }} {{ form.suppliers() }}
+	    	<div class="col-md-2">
+	    		
+	    		{{ form.suppliers.label }} {{ form.suppliers(class_="form-control") }}
 	    		{% for error in form.suppliers.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
-                </div>
+                
 	    	</div>
-	    	<div class="col-md-3">
-	    		<div class="checkbox">
-	    		{{ form.categories.label }} {{ form.categories() }}
+	    	<div class="col-md-2">
+	    		
+	    		{{ form.categories.label }} {{ form.categories(class_="form-control") }}
 	    		{% for error in form.categories.errors %}
 	    			<small class="error">{{ error }}</small>
                 {% endfor %}
-                </div>
+                
 	    	</div>
 	    </div>
 	    

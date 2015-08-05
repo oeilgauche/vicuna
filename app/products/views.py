@@ -17,9 +17,10 @@ from .forms import AddProduct, AddCategory
 # Import the models
 from .models import Product, Category, StockHistory
 from ..suppliers.models import Supplier
+from ..settings.models import VAT
 
 # Import helpers
-from ..helpers.helpers import to_int, to_dec
+from ..helpers.helpers import to_int, to_dec, to_dec_string
 
 # Import Babel
 from app import babel
@@ -30,7 +31,7 @@ from config import LANGUAGES
 def products_list():
     products = Product.query.order_by(Product.reference)
     for product in products:
-    	product.stock = to_dec(product.stock)
+    	product.stock = to_dec_string(product.stock)
     return render_template('products/list.html',
                             title='Products',
                             products=products)
@@ -39,8 +40,10 @@ def products_list():
 @products.route('/add', methods=['GET', 'POST'])
 def product_add():
 	form = AddProduct()
+	vat = [(v.id, v.name) for v in VAT.query.order_by(VAT.name)]
 	suppliers = [(s.id, s.name) for s in Supplier.query.order_by(Supplier.name)]
 	categories = [(c.id, c.name) for c in Category.query.order_by(Category.code)]
+	form.vat.choices = vat
 	form.suppliers.choices = suppliers
 	form.categories.choices = categories
 	if form.validate_on_submit():
@@ -51,7 +54,8 @@ def product_add():
 		product = Product(name=form.name.data, reference=form.reference.data,
 							supplier_reference=form.supplier_reference.data,
 							ean=form.ean.data, description=form.description.data,
-							buying_price=buying_price_int, stock=stock_int)
+							buying_price=buying_price_int, stock=stock_int,
+							vat_id=form.vat.data)
 		db.session.add(product)
 		db.session.commit()
 
@@ -84,7 +88,8 @@ def product_edit(id):
 	# Initialize form
 	product = Product.query.get_or_404(id)
 	form = AddProduct()
-	# Create list of suppliers
+	# Create lists
+	form.vat.choices = [(v.id, v.name) for v in VAT.query.order_by(VAT.name)]
 	form.suppliers.choices = [(s.id, s.name) for s in Supplier.query.order_by(Supplier.name)]
 	form.categories.choices = [(c.id, c.name) for c in Category.query.order_by(Category.code)]
 	
@@ -95,6 +100,7 @@ def product_edit(id):
 		product.ean = form.ean.data
 		product.description = form.description.data
 		product.buying_price = to_int(form.buying_price.data)
+		product.vat_id=form.vat.data
 		product.stock = to_int(form.stock.data)
 		product.supplier = []
 		#product.category = []
@@ -111,11 +117,11 @@ def product_edit(id):
 			db.session.add(supp)
 			db.session.commit()
 
-		for c in form.categories.data:
-			cat = Category.query.filter_by(id=c).first()
-			cat.products.append(product)
-			db.session.add(cat)
-			db.session.commit()
+		c = form.categories.data
+		cat = Category.query.filter_by(id=c).first()
+		cat.products.append(product)
+		db.session.add(cat)
+		db.session.commit()
 
 		flash('Product %s (Reference %s) modified!' % (product.name, product.reference), 'success')
 		return redirect(url_for('products.products_list'))
@@ -123,20 +129,19 @@ def product_edit(id):
 	#Populate the fields
 	form.suppliers.data = [s.id for s in product.supplier]
 	form.categories.data = [0, product.category.id]
-	cat = product.category.id
 	form.name.data = product.name
 	form.reference.data = product.reference
 	form.supplier_reference.data = product.supplier_reference
 	form.ean.data = product.ean
 	form.description.data = product.description
 	form.buying_price.data = to_dec(product.buying_price)
+	form.vat.data = product.vat_id
 	form.stock.data = to_dec(product.stock)
 	
 	return render_template('products/edit.html',
 							title='Edit product',
 							action="edit",
-							form=form,
-							cat=cat)
+							form=form)
 
 
 @products.route('/delete/<int:id>', methods=['GET', 'POST'])

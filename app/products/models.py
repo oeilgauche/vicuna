@@ -13,8 +13,12 @@ class Product(db.Model):
 	buying_price = db.Column(db.Integer)
 	ean = db.Column(db.Integer)
 	description = db.Column(db.Text)
-	category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
 
+	vat_id = db.Column(db.Integer, db.ForeignKey('VAT.id'))
+	vat = db.relationship('VAT',
+							backref=db.backref('products'))
+
+	category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
 	category = db.relationship('Category',
 							backref=db.backref('products', order_by=id))
 

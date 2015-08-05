@@ -2,10 +2,10 @@
 {% extends "backend/base.html" %}
 
 {% block content %}
+<h1>Products <small><a href="{{ url_for('products.product_add') }}" class="btn btn-primary btn-xs">Add</a></small></h1>
+
 <div class="row">
-	<h1>Products</h1>
-	<div class="col-md-8">
-		<a href="{{ url_for('products.product_add') }}" class="btn btn-primary">Add</a>
+	<div class="col-md-8 col-md-offset-2">
 		{% include "backend/flash.html" %}
 
 		<table class="table table-striped table-hover table-condensed">

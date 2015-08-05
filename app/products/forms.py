@@ -13,14 +13,12 @@ class AddProduct(Form):
 	buying_price = DecimalField('Buying Price', validators=[DataRequired()])
 	ean = IntegerField('EAN', validators=[DataRequired()])
 	description = TextAreaField('Description')
+	vat = SelectField('VAT', coerce=int, validators=[(DataRequired())])
 	suppliers = SelectMultipleField('Suppliers',
 									option_widget=widgets.CheckboxInput(),
-									widget=widgets.ListWidget(prefix_label=False),
 									coerce=int,
 									validators=[DataRequired()])
-	categories = SelectMultipleField('Categories',
-									option_widget=widgets.CheckboxInput(),
-									widget=widgets.ListWidget(prefix_label=False),
+	categories = SelectField('Categories',
 									coerce=int,
 									validators=[DataRequired()])
 	stock = DecimalField('Stock', validators=[DataRequired()])

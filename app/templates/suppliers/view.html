@@ -2,15 +2,17 @@
 {% extends "backend/base.html" %}
 
 {% block content %}
-<div class="small-12 columns">
-	<h1>{{ supplier.name }}</h1>
-	{% include "backend/flash.html" %}
 
-		<p>ID: {{ supplier.id }}</p>
+	<h1>{{ supplier.name }} ({{ supplier.id }})</h1>
+	{% include "backend/flash.html" %}
+<div class="row">
+	<div class="col-md-4">
 		<p>Address:</p>
 		<p>{{ supplier.address }}<br>
 		{{ supplier.zip_code }} {{ supplier.city }}<br>
 		{{ supplier.country }}</p>
+	</div>
+</div>
 		<p>Phone: {{ supplier.phone }}</p>
 		<p>Email: {{ supplier.email }}</p>
 		
@@ -27,7 +29,7 @@
 
 
 
-		<a href="{{ url_for('suppliers.suppliers_edit', id=supplier.id) }}" class="radius button" >Edit</a>
+		<a href="{{ url_for('suppliers.suppliers_edit', id=supplier.id) }}" class="btn btn-primary" >Edit</a>
 
 
 {% endblock %}
