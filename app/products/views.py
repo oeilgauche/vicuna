@@ -42,7 +42,7 @@ def products_list():
 @products.route('/add', methods=['GET', 'POST'])
 def product_add():
 	form = AddProduct()
-	vat = [(v.id, v.name) for v in VAT.query.order_by(VAT.name)]
+	vat = [(v.id, v.amount) for v in VAT.query.order_by(VAT.name)]
 	suppliers = [(s.id, s.name) for s in Supplier.query.order_by(Supplier.name)]
 	categories = [(c.id, c.name) for c in Category.query.order_by(Category.code)]
 	form.vat.choices = vat
@@ -97,7 +97,10 @@ def product_edit(id):
 	product = Product.query.get_or_404(id)
 	form = AddProduct()
 	# Create lists
-	form.vat.choices = [(v.id, v.name) for v in VAT.query.order_by(VAT.name)]
+	vat_query = VAT.query.order_by(VAT.name)
+	for v in vat_query:
+		v.amount = to_dec(v.amount)
+	form.vat.choices = [(v.id, v.amount) for v in vat_query]
 	form.suppliers.choices = [(s.id, s.name) for s in Supplier.query.order_by(Supplier.name)]
 	form.categories.choices = [(c.id, c.name) for c in Category.query.order_by(Category.code)]
 	
