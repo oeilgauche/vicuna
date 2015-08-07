@@ -1,7 +1,13 @@
 {
-	"u":{
+	"units":{
 		"units":"Units",
 		"kilos":"Kg",
 		"liters":"l"
-	}
+	},
+	"currency":{
+		"label":"Euros",
+		"abbr":"€"
+	},
+	"stores":1,
+	"repo":"local"
 }

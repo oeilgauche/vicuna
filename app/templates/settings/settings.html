@@ -4,68 +4,60 @@
 {% block content %}
 	<h1>Settings</h1>
 	{% include "backend/flash.html" %}
-	<form method="post" action="" name="add">
-	    {{ settings.hidden_tag() }}
-	    <div class="row form-group">
-		    <div class="col-md-4">
-		    		{{ settings.currency.label }} {{ settings.currency() }}
-		    		{% for error in settings.currency.errors %}
-		    			<small class="error">{{ error }}</small>
-	                {% endfor %}
-		    </div>
-		    <div class="col-md-4">
-		    		{{ settings.file_repo.label }} {{ settings.file_repo() }}
-		    		{% for error in settings.file_repo.errors %}
-		    			<small class="error">{{ error }}</small>
-	                {% endfor %}
-		    </div>
-		    <div class="col-md-4">
-		    		{{ settings.nb_of_stores.label }} {{ settings.nb_of_stores() }}
-		    		{% for error in settings.nb_of_stores.errors %}
-		    			<small class="error">{{ error }}</small>
-	                {% endfor %}
-		    </div>
+	<div class="row">
+		<div class="col-md-2">
+			<h4>Units</h4>
+			<ul>
+				{% for config_unit in config_units %}
+					<li>{{ config_units[config_unit]}} ({{ config_unit }})</li>
+				{% endfor %}
+			</ul>
 		</div>
-		<div class="row form-group">
-			<div class="col-md-2">
-		    	<button type="submit" value="Add">Add</button>
-		    </div>
+		<div class="col-md-2">
+			<h4>Currency</h4>
+					<li>{{ config_currency["label"]}} ({{ config_currency["abbr"] }})</li>
 		</div>
-	</form>
-	{% for config_unit in config_units %}
-		{{ config_unit.data }}
-	{% endfor %}
-	<h4>VAT</h4>
-	<table>
-		{% for vat_item in vat_items %}
-			<tr>
-				<td>{{ vat_item.name }}</td>
-				<td>{{ vat_item.amount }} %</td>
-				<td>
-					<a href="{{ url_for('settings.vat_delete', id=vat_item.id) }}" class="radius button tiny">Delete</a>
-				</td>
-			</tr>
-		{% endfor %}
-	</table>
+		<div class="col-md-2">
+			<h4>Repository</h4>
+			<li>{{ config_repo }}</li>
+		</div>
+		<div class="col-md-2">
+			<h4>Number of stores</h4>
+			<li>{{ (config_stores) }}</li>
+		</div>
+	</div>
 	
-	<form method="post" action="" name="add">
+	<div class="row">
+		<div class="col-md-4">
+			<h4>VAT</h4>
+			<table class="table table-striped table-hover table-condensed">
+				{% for vat_item in vat_items %}
+					<tr>
+						<td>{{ vat_item.name }}</td>
+						<td>{{ vat_item.amount }} %</td>
+						<td>
+							<a href="{{ url_for('settings.vat_delete', id=vat_item.id) }}" class="radius button tiny">Delete</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+	
+	<form method="post" action="" name="add" class="form-inline">
 	    {{ add_vat.hidden_tag() }}
-	    <div class="row form-group">
-		    <div class="col-md-4">
-		    		{{ add_vat.name.label }} {{ add_vat.name() }}
+		    <div class="form-group">
+		    		{{ add_vat.name.label }} {{ add_vat.name(class_="form-control") }}
 		    		{% for error in add_vat.name.errors %}
 		    			<small class="error">{{ error }}</small>
 	                {% endfor %}
 		    </div>
-		    <div class="col-md-2">
-		    		{{ add_vat.amount.label }} {{ add_vat.amount() }}
+		    <div class="form-group">
+		    		{{ add_vat.amount.label }} {{ add_vat.amount(class_="form-control") }}
 		    		{% for error in add_vat.amount.errors %}
 		    			<small class="error">{{ error }}</small>
 	                {% endfor %}
 		    </div>
-		    <div class="col-md-2">
-		    	<button type="submit" value="Add">Add</button>
-		    </div>
-		</div>
+		    <button type="submit" value="Add" class="btn btn-primary">Add</button>
 	</form>
 {% endblock %}

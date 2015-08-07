@@ -26,6 +26,9 @@ from .models import VAT, Settings
 from ..suppliers.models import Supplier
 from ..products.models import Product, Category
 
+# Import helpers
+from ..helpers.helpers import read_setting
+
 # Import Babel
 from app import babel
 from config import LANGUAGES
@@ -34,26 +37,12 @@ from config import LANGUAGES
 @settings.route('/', methods=['GET', 'POST'])
 def settings_list():
 	
-	# Settings area
-	settings_items = Settings.query.first()
-	settings = UpdateSettings(prefix="settings")
+	# Settings area (read-only)
 
-	if settings.validate_on_submit() and settings.settings_hidden.data:
-		update_settings = Settings(currency=settings.currency.data,
-									file_repo=settings.file_repo.data,
-									nb_of_stores=settings.nb_of_stores.data)
-		db.session.add(update_settings)
-		db.session.commit()
-		flash('Settings updated!', 'success')
-
-	
-	settings.currency.data = settings_items.currency
-	settings.file_repo.data = settings_items.file_repo
-	settings.nb_of_stores.data = settings_items.nb_of_stores
-
-	with open(os.path.join(BASE_DIR, 'app/settings/config.json')) as json_data_file:
-		config_data = json.load(json_data_file)
-	config_units = config_data["u"]
+	config_units = read_setting("units")
+	config_currency = read_setting("currency")
+	config_stores = read_setting("stores")
+	config_repo = read_setting("repo")
 
 
 	# VAT area
@@ -73,9 +62,11 @@ def settings_list():
 		vat_item.amount = float(vat_item.amount) / 100
 
 	return render_template('settings/settings.html',
-                            title='Products',
-                            settings=settings,
+                            title='Settings',
                             config_units=config_units,
+                            config_currency=config_currency,
+                            config_stores=config_stores,
+                            config_repo=config_repo,
                             vat_items=vat_items,
                             add_vat=add_vat)
 

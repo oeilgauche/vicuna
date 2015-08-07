@@ -1,3 +1,11 @@
+import os
+
+# Configurations
+from config import BASE_DIR
+
+# Import JSON
+import json
+
 # Import the models
 from ..settings.models import VAT
 
@@ -25,3 +33,8 @@ def calc_margin(buying_price, selling_price):
 	buying_price = float(buying_price)
 	margin = ((selling_price - buying_price) / buying_price) * 100
 	return "%.2f" % margin
+
+def read_setting(setting):
+	with open(os.path.join(BASE_DIR, 'app/settings/config.json')) as json_data_file:
+		config_data = json.load(json_data_file)
+	return config_data[setting]
