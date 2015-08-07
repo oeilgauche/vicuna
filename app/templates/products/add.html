@@ -112,45 +112,5 @@
 
 {% endblock %}
 {% block script %}
-<script type="text/javascript">
-	$(document).ready(function(){
-		// Update Selling Price when VAT is changed
-		$('#vat').change(function(){
-			var vat = ($('#vat option:selected').text() / 100) + 1
-			var price = $('#selling_price_no_tax').val() * vat
-			$('#price').val(price.toFixed(2));
-		});
-
-		// Initialize the values on load
-		var margin = (($('#selling_price_no_tax').val() - $('#buying_price').val()) / $('#buying_price').val()) * 100
-        $('#margin').val(margin.toFixed(2));
-        var vat = ($('#vat option:selected').text() / 100) + 1
-        var price = $('#selling_price_no_tax').val() * vat
-        $('#price').val(price.toFixed(2));
-
-        // Compute Margin from Selling Price
-	    $('#selling_price_no_tax').keyup(function(){
-	    	var margin = (($('#selling_price_no_tax').val() - $('#buying_price').val()) / $('#buying_price').val()) * 100
-	        $('#margin').val(margin.toFixed(2));
-	        var price = $('#selling_price_no_tax').val() * vat
-	        $('#price').val(price.toFixed(2));
-	    });
-
-	    // Compute Selling Price from Margin
-	    $('#margin').keyup(function(){
-	    	var selling_price = $('#buying_price').val() * (($('#margin').val() / 100) + 1)
-	        $('#selling_price_no_tax').val(selling_price.toFixed(2));
-	        var price = $('#selling_price_no_tax').val() * vat
-	        $('#price').val(price.toFixed(2));
-	    });
-	    
-	    // Compute Selling Price from Buying Price, Margin being unchanged
-	    $('#buying_price').keyup(function(){
-	    	var selling_price = $('#buying_price').val() * (($('#margin').val() / 100) + 1)
-	        $('#selling_price_no_tax').val(selling_price.toFixed(2));
-	        var price = $('#selling_price_no_tax').val() * vat
-	        $('#price').val(price.toFixed(2));
-	    });
-	});
-</script>
+<script src="/static/js/backend/script.js"></script>
 {% endblock %}

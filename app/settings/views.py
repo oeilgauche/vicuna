@@ -1,9 +1,16 @@
 # Import flask dependencies
 from flask import (Blueprint, request, render_template,
                   flash, g, session, redirect, url_for)
+import os
 
 # Import password / encryption helper tools
 from werkzeug import check_password_hash, generate_password_hash
+
+# Configurations
+from config import BASE_DIR
+
+# Import JSON
+import json
 
 # Import the database object from the main app module
 from app import db
@@ -44,6 +51,11 @@ def settings_list():
 	settings.file_repo.data = settings_items.file_repo
 	settings.nb_of_stores.data = settings_items.nb_of_stores
 
+	with open(os.path.join(BASE_DIR, 'app/settings/config.json')) as json_data_file:
+		config_data = json.load(json_data_file)
+	config_units = config_data["u"]
+
+
 	# VAT area
 	add_vat = AddVAT(prefix="add_vat")
 
@@ -63,6 +75,7 @@ def settings_list():
 	return render_template('settings/settings.html',
                             title='Products',
                             settings=settings,
+                            config_units=config_units,
                             vat_items=vat_items,
                             add_vat=add_vat)
 

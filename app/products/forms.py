@@ -2,7 +2,7 @@ from flask.ext.babel import Babel
 from flask.ext.wtf import Form
 from wtforms import (StringField, BooleanField, TextAreaField,
 					IntegerField, SelectField, SelectMultipleField,
-					DecimalField, RadioField, HiddenField, widgets)
+					DecimalField, RadioField, widgets)
 from wtforms.validators import DataRequired, Length, Email
 from .models import Product, Category
 from ..suppliers.models import Supplier
@@ -16,7 +16,6 @@ class AddProduct(Form):
 	ean = IntegerField('EAN', validators=[DataRequired()])
 	description = TextAreaField('Description')
 	vat = SelectField('VAT', coerce=int, validators=[(DataRequired())])
-	vat_amount = HiddenField('VAT Ammount')
 	suppliers = SelectMultipleField('Suppliers',
 									option_widget=widgets.CheckboxInput(),
 									coerce=int,

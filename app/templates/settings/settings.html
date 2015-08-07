@@ -32,6 +32,9 @@
 		    </div>
 		</div>
 	</form>
+	{% for config_unit in config_units %}
+		{{ config_unit.data }}
+	{% endfor %}
 	<h4>VAT</h4>
 	<table>
 		{% for vat_item in vat_items %}
