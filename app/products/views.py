@@ -11,6 +11,9 @@ from app import db
 # Define the blueprint: 'auth', set its url prefix: app.url/auth
 products = Blueprint('products', __name__, url_prefix='/backend/products')
 
+# Import helpers
+from ..helpers.helpers import read_setting
+
 # Import the forms
 from .forms import AddProduct, AddCategory
 
@@ -42,12 +45,17 @@ def products_list():
 @products.route('/add', methods=['GET', 'POST'])
 def product_add():
 	form = AddProduct()
-	vat = [(v.id, v.amount) for v in VAT.query.order_by(VAT.name)]
+	vat = [(v.id, to_dec(v.amount)) for v in VAT.query.order_by(VAT.name)]
 	suppliers = [(s.id, s.name) for s in Supplier.query.order_by(Supplier.name)]
 	categories = [(c.id, c.name) for c in Category.query.order_by(Category.code)]
+	units = [(k, v) for k, v in read_setting("units").iteritems()]
+	conditioning_units = [(k, v) for k, v in read_setting("conditioning").iteritems()]
 	form.vat.choices = vat
 	form.suppliers.choices = suppliers
 	form.categories.choices = categories
+	form.unit.choices = units
+	form.conditioning_unit.choices = conditioning_units
+
 	if form.validate_on_submit():
 		# Storing the buying price as an integer
 		buying_price_int = to_int(form.buying_price.data)
@@ -56,6 +64,9 @@ def product_add():
 		selling_price = int(add_vat(to_int(form.selling_price_no_tax.data), form.vat.data))
 
 		product = Product(name=form.name.data, reference=form.reference.data,
+							unit=form.unit.data, packing=to_int(form.packing.data),
+							conditioning=to_int(form.conditioning.data),
+							conditioning_unit=form.conditioning_unit.data,
 							supplier_reference=form.supplier_reference.data,
 							ean=form.ean.data, description=form.description.data,
 							buying_price=buying_price_int,
@@ -107,6 +118,10 @@ def product_edit(id):
 	if form.validate_on_submit():
 		product.name = form.name.data
 		product.reference = form.reference.data
+		product.unit = form.unit.data
+		product.packing = to_int(form.packing.data)
+		product.conditioning = to_int(form.conditioning.data)
+		product.conditioning_unit = form.conditioning_unit.data
 		product.supplier_reference = form.supplier_reference.data
 		product.ean = form.ean.data
 		product.description = form.description.data
@@ -144,6 +159,10 @@ def product_edit(id):
 	form.categories.data = [0, product.category.id]
 	form.name.data = product.name
 	form.reference.data = product.reference
+	form.unit.data = product.unit
+	form.packing.data = to_dec(product.packing)
+	form.conditioning.data = to_dec(product.conditioning)
+	form.conditioning_unit.data = product.conditioning_unit
 	form.supplier_reference.data = product.supplier_reference
 	form.ean.data = product.ean
 	form.description.data = product.description
@@ -170,6 +189,8 @@ def product_delete(id):
 @products.route('/view/<int:id>', methods=['GET', 'POST'])
 def product_view(id):
 	product = Product.query.get_or_404(id)
+	product.packing = to_dec(product.packing)
+	product.conditioning = to_dec(product.conditioning)
 	product.buying_price = to_dec(product.buying_price)
 	product.stock = to_dec(product.stock)
 	product.vat.amount = to_dec_string(product.vat.amount)

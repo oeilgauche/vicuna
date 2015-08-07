@@ -25,6 +25,17 @@
 </div>
 <div class="row">
 	<div class="col-md-1">
+		<p><strong>Unit: </strong><br>{{ product.unit }}</p>
+	</div>
+	<div class="col-md-1">
+		<p><strong>Packing: </strong><br>{{ product.packing }} {{ product.unit }}</p>
+	</div>
+	<div class="col-md-1">
+		<p><strong>Conditioning: </strong><br>{{ product.conditioning }} {{ product.conditioning_unit }}</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-1">
 		<p><strong>Buying Price: </strong><br>{{ product.buying_price }} €</p>
 	</div>
 	<div class="col-md-1">

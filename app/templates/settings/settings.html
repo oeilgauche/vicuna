@@ -6,10 +6,18 @@
 	{% include "backend/flash.html" %}
 	<div class="row">
 		<div class="col-md-2">
-			<h4>Units</h4>
+			<h4>Product Units</h4>
 			<ul>
 				{% for config_unit in config_units %}
 					<li>{{ config_units[config_unit]}} ({{ config_unit }})</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="col-md-2">
+			<h4>Conditioning Units</h4>
+			<ul>
+				{% for config in config_conditioning %}
+					<li>{{ config_conditioning[config]}} ({{ config }})</li>
 				{% endfor %}
 			</ul>
 		</div>

@@ -26,6 +26,33 @@
                 {% endfor %}
 	    	</div>
 	    </div>
+
+	    <div class="row form-group">
+	    	<div class="col-md-1">
+	    		{{ form.unit.label }} {{ form.unit(class_="form-control") }}
+	    		{% for error in form.unit.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    	<div class="col-md-1">
+	    		{{ form.packing.label }} {{ form.packing(class_="form-control") }}
+	    		{% for error in form.packing.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    	<div class="col-md-1">
+	    		{{ form.conditioning.label }} {{ form.conditioning(class_="form-control") }}
+	    		{% for error in form.conditioning.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    	<div class="col-md-1">
+	    		{{ form.conditioning_unit.label }} {{ form.conditioning_unit(class_="form-control") }}
+	    		{% for error in form.conditioning_unit.errors %}
+	    			<small class="error">{{ error }}</small>
+                {% endfor %}
+	    	</div>
+	    </div>
 	    
 	    <div class="row form-group">
 	    	<div class="col-md-2">

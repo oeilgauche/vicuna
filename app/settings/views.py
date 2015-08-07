@@ -40,6 +40,7 @@ def settings_list():
 	# Settings area (read-only)
 
 	config_units = read_setting("units")
+	config_conditioning = read_setting("conditioning")
 	config_currency = read_setting("currency")
 	config_stores = read_setting("stores")
 	config_repo = read_setting("repo")
@@ -64,6 +65,7 @@ def settings_list():
 	return render_template('settings/settings.html',
                             title='Settings',
                             config_units=config_units,
+                            config_conditioning=config_conditioning,
                             config_currency=config_currency,
                             config_stores=config_stores,
                             config_repo=config_repo,

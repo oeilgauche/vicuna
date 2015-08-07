@@ -10,6 +10,10 @@ from ..suppliers.models import Supplier
 class AddProduct(Form):
 	name = StringField('Name', validators=[DataRequired()])
 	reference = IntegerField('Reference', validators=[DataRequired()])
+	unit = SelectField('Unit', validators=[DataRequired()])
+	packing = IntegerField('Packing', validators=[DataRequired()])
+	conditioning = IntegerField('Conditioning')
+	conditioning_unit = SelectField('Unit')
 	supplier_reference = StringField('Supplier Reference', validators=[DataRequired()])
 	buying_price = DecimalField('Buying Price', validators=[DataRequired()])
 	selling_price_no_tax = DecimalField('Price b/ VAT', validators=[DataRequired()])

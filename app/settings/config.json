@@ -4,6 +4,13 @@
 		"kilos":"Kg",
 		"liters":"l"
 	},
+	"conditioning":{
+		"kilos":"kg",
+		"grams":"g",
+		"liters":"l",
+		"centiliters":"cl"
+
+		},
 	"currency":{
 		"label":"Euros",
 		"abbr":"€"
